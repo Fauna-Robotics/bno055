@@ -29,7 +29,7 @@ import json
 from math import sqrt
 import struct
 import sys
-from time import sleep
+from time import sleep, time_ns
 
 from bno055 import registers
 from bno055.connectors.Connector import Connector
@@ -184,7 +184,9 @@ class SensorService:
             0.0, 0.0, self.param.variance_angular_vel.value[2]
         ]
         # node.get_logger().info('Publishing imu message')
-        print(imu_raw_msg.linear_acceleration)
+
+        timesec = time_ns() / (10 ** 9) 
+        print(timesec, imu_raw_msg.linear_acceleration)
         self.pub_imu_raw.publish(imu_raw_msg)
 
         # TODO: make this an option to publish?
